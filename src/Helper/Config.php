@@ -76,6 +76,11 @@ class Config
             'httpClient'     => [],
             'environment'    => 'development',
             'backtraceLimit' => 0,
+            'v1_trans_sock'  => 'unix:///tmp/.apm.sock',
+            'v1_err_sock'    => 'unix:///tmp/.apm.errors.sock',
+            'socket_timeout' => 1,
+            'connector'      => \PhilKra\Middleware\Connector::class,//\PhilKra\Middleware\SocketConnector::class
+            
         ];
     }
 }
