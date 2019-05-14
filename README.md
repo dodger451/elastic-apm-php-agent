@@ -178,6 +178,11 @@ env           : $_SERVER vars to send to the APM Server, empty set sends all. Ke
 cookies       : Cookies to send to the APM Server, empty set sends all. Keys are case sensitive, Default: []
 httpClient    : Extended GuzzleHttp\Client Default: []
 backtraceLimit: Depth of a transaction backtrace, Default: unlimited
+
+connector     : \PhilKra\Middleware\Connector::class or \PhilKra\Middleware\SocketConnector::class 
+v1_trans_sock : 'unix:///tmp/.apm.sock' (relevant if connector is \PhilKra\Middleware\SocketConnector::class)
+v1_err_sock   : 'unix:///tmp/.apm.errors.sock' (relevant if connector is \PhilKra\Middleware\SocketConnector::class)
+socket_timeout: 1  (relevant if connector is \PhilKra\Middleware\SocketConnector::class)
 ```
 
 Detailed `GuzzleHttp\Client` options can be found [here](http://docs.guzzlephp.org/en/stable/request-options.html#request-options).
@@ -199,6 +204,20 @@ $config = [
 ];
 $agent = new \PhilKra\Agent($config);
 ```
+
+#### Example of a configuration using the go daemon at  
+```php
+$config = [
+    'appName'     => 'My WebApp',
+    'appVersion'  => '1.0.42',
+    'connector'   => \PhilKra\Middleware\SocketConnector::class,
+    'v1_trans_sock'  => 'unix:///tmp/.apm.sock',
+    'v1_err_sock'    => 'unix:///tmp/.apm.errors.sock',
+    'socket_timeout' => 1,
+];
+$agent = new \PhilKra\Agent($config);
+```
+
 
 ## Tests
 ```bash
