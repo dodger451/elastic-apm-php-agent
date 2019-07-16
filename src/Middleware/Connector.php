@@ -15,7 +15,7 @@ use GuzzleHttp\Client;
  * Connector which Transmits the Data to the Endpoints
  *
  */
-class Connector
+class Connector implements V1ApiConnectorInterface
 {
     /**
      * Agent Config

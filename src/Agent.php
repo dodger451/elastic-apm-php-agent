@@ -10,7 +10,7 @@ use PhilKra\Events\Transaction;
 use PhilKra\Events\Error;
 use PhilKra\Helper\Timer;
 use PhilKra\Helper\Config;
-use PhilKra\Middleware\Connector;
+use PhilKra\Middleware\V1ApiConnectorInterface;
 use PhilKra\Exception\Transaction\DuplicateTransactionNameException;
 use PhilKra\Exception\Transaction\UnknownTransactionException;
 
@@ -224,7 +224,11 @@ class Agent
             return true;
         }
 
-        $connector = new Connector($this->config);
+        $connClass = $this->config->get('connector');
+        /**
+         * @var V1ApiConnectorInterface $connector
+         */
+        $connector = new $connClass($this->config);
         $status = true;
 
         // Commit the Errors
